@@ -31,55 +31,48 @@
 
         if (navigator.geolocation) {
             console.log("Starting geo monitoring");
-            navigator.geolocation.watchPosition(showPosition);
+            navigator.geolocation.watchPosition(moveView);
         } else {
             console.log("Geolocation not supported");
         }
 
-        var x = 0;
-        var y = 0;
+        var lat = 512451;
+        var long = -1627.835;
 
-        function showPosition(position) {
+        function moveView(position) {
 
 
-            console.log("x " + position.coords.latitude * 10000);
-            console.log("y " + position.coords.longitude * 10000);
+            //var lat = position.coords.latitude * 10000;
+            //var long = position.coords.longitude * 10000;
 
-            if (window.awe.povs) {
+            console.log("Moving to " + lat , " " + long)
 
-                /*
-                 x = x + 10;
-                 window.awe.povs.update({
-                 data: {
-                 position: {
-                 x: parseInt(position.coords.latitude * 1000000),
-                 y: parseInt(position.coords.longitude * 1000000),
-                 z: 0
-                 }
-                 },
-                 where: {
-                 id: "default"
-                 }
-                 });
-                 */
-            }
-            //window.awe.scene_needs_rendering = 1;
+            awe.pov().update({position: {x: lat, y: long}});
+            awe.scene_needs_rendering = 1;
         }
 
-        window.awe.debug = true;
+        setInterval(function() {
+            lat = lat + 10;
+            long = long + 10;
+            moveView();
+        },1000);
+
         // initialize awe after page loads
-        window.awe.init({
+        awe.init({
             // automatically detect the device type
             device_type: awe.AUTO_DETECT_DEVICE_TYPE,
             // populate some default settings
             settings: {
+                debug: true,
                 container_id: 'container',
                 fps: 30,
                 default_camera_position: {
                     x: 0,
                     y: 0,
-                    z: 0
+                    z: -200
                 },
+                near: 1,
+                far: 1000,
                 default_lights: [
                     {
                         id: 'hemisphere_light',
@@ -125,13 +118,12 @@
                             }
 
 
-                            // add some points of interest (poi) for each of the compass points
-                            awe.pois.add({id: 'register-desk', position: {x:0, y: 0, z: -300}});
+                            awe.pois.add({id: 'register-desk', position: {x: 512451, y: -1627.835, z: 0}});
 
 
-                            // add projections to each of the poAis
+                            // add projections to each of the pois
                             awe.projections.add({
-                                id: 'n',
+                                id: 'register-desk',
                                 geometry: {
                                     font_url: "Supersonic_Rocketship_Regular.js",   /// REQUIRED - currently must be .js not .json
                                     parameters: {
@@ -146,6 +138,9 @@
                                     color: 0xFF0000,
                                 },
                             }, {poi_id: 'register-desk'});
+
+                            console.log(awe.pois.list());
+                            console.log(awe.projections.list());
 
                         },
                     },

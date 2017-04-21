@@ -33,7 +33,7 @@
                         }
                         if (device_orientation_data && enabled && gyro_mode != 'none') {
 
-                            console.log("updating pov quaternion")
+                            //console.log("updating pov quaternion")
                             awe.util.update_pov_quaternion(device_orientation_data, current_screen_orientation, zoom, zoom_delta, last_update, gyro_mode);
                         }
                     }
@@ -62,8 +62,8 @@
                         window.removeEventListener('deviceorientation', handler, false);
                     },
                     handler: function (e) {
-                        console.log("here in device orientation event");
-                        console.log("z" + e.alpha + " x " + e.beta + " y " + e.gamma);
+                        //console.log("here in device orientation event");
+                        //console.log("z" + e.alpha + " x " + e.beta + " y " + e.gamma);
 
                         device_orientation_data = {
                             alpha: 0, // z axis movement in a circle if flat

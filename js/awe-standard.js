@@ -1677,6 +1677,7 @@
                     near,
                     far
                 );
+
                 if (!settings.default_camera_position) {
                     this_awe.settings.add({
                         id: 'default_camera_position',
@@ -4540,9 +4541,11 @@
                     beta = THREE.Math.degToRad(orientation_data.beta || 0); // X'
                     gamma = THREE.Math.degToRad(orientation_data.gamma || 0); // Y''
 
+                    /*
                     console.log("alpha" + alpha);
                     console.log("beta" + beta);
                     console.log("gama" + gamma);
+                    */
                     // only process non-zero 3-axis data
                     if (alpha !== 0 && beta !== 0 && gamma !== 0) {
                         obj_quat = this_awe.util.create_pov_quaternion(alpha, beta, gamma, orient);
